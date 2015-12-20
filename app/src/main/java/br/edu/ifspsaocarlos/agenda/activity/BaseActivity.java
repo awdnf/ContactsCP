@@ -75,7 +75,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v,
                                     ContextMenu.ContextMenuInfo menuInfo) {
-        // TODO Auto-generated method stub
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater m = getMenuInflater();
         m.inflate(R.menu.menu_context, menu);

@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter;
 
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import br.edu.ifspsaocarlos.agenda.R;
 import br.edu.ifspsaocarlos.agenda.model.Contato;
 
@@ -37,6 +39,7 @@ public class ContatoArrayAdapter extends ArrayAdapter <Contato>  {
             convertView = inflater.inflate(R.layout.contato_celula, null);
             holder = new ViewHolder();
             holder.nome = (TextView) convertView.findViewById(R.id.nome);
+            holder.telefones = (TextView) convertView.findViewById(R.id.telefones);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -44,11 +47,13 @@ public class ContatoArrayAdapter extends ArrayAdapter <Contato>  {
 
         Contato c = getItem(position);
         holder.nome.setText(c.getNome());
+        holder.telefones.setText(c.getFone() + " / " + c.getFone2());
         return convertView;
     }
 
     static class ViewHolder {
         public TextView nome;
+        public TextView telefones;
     }
 
 

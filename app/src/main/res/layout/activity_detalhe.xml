@@ -55,6 +55,19 @@
         </EditText>
 
         <TextView
+            android:id="@+id/txtFone2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fone">
+        </TextView>
+
+        <EditText
+            android:id="@+id/editFone2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </EditText>
+
+        <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,6 +76,19 @@
 
         <EditText
             android:id="@+id/editText3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+        </EditText>
+
+        <TextView
+            android:id="@+id/textViewNiver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Aniversario" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/editTextNiver"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
         </EditText>
