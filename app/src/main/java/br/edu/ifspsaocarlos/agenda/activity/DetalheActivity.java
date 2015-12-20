@@ -1,6 +1,9 @@
 package br.edu.ifspsaocarlos.agenda.activity;
 
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
@@ -12,12 +15,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import br.edu.ifspsaocarlos.agenda.R;
-import br.edu.ifspsaocarlos.agenda.data.ContatoDAO;
 import br.edu.ifspsaocarlos.agenda.model.Contato;
+import br.edu.ifspsaocarlos.agenda.provider.ContactProvider;
 
 public class DetalheActivity extends AppCompatActivity {
+
     private Contato c;
-    private ContatoDAO cDAO;
+    private Uri contactsUri = ContactProvider.Contacts.CONTENT_URI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +57,6 @@ public class DetalheActivity extends AppCompatActivity {
         }
 
 
-        cDAO = new ContatoDAO(this);
-
     }
 
 
@@ -77,7 +79,7 @@ public class DetalheActivity extends AppCompatActivity {
                 salvar();
                 return true;
             case R.id.delContato:
-                cDAO.deleteContact(c);
+                getContentResolver().delete(ContentUris.withAppendedId(contactsUri, c.getId()), null, null);
                 Toast.makeText(getApplicationContext(), "Removido com sucesso", Toast.LENGTH_SHORT).show();
                 Intent resultIntent = new Intent();
                 setResult(RESULT_OK, resultIntent);
@@ -95,24 +97,19 @@ public class DetalheActivity extends AppCompatActivity {
         String fone2 = ((EditText) findViewById(R.id.editFone2)).getText().toString();
         String aniversario = ((EditText) findViewById(R.id.editTextNiver)).getText().toString();
 
-        if (c == null) {
-            c = new Contato();
-            c.setNome(name);
-            c.setFone(fone);
-            c.setEmail(email);
-            c.setFone2(fone2);
-            c.setAniversario(aniversario);
+        ContentValues values = new ContentValues();
+        values.put(ContactProvider.Contacts.KEY_NAME, name);
+        values.put(ContactProvider.Contacts.KEY_EMAIL, email);
+        values.put(ContactProvider.Contacts.KEY_FONE, fone);
+        values.put(ContactProvider.Contacts.KEY_FONE2, fone2);
+        values.put(ContactProvider.Contacts.KEY_NIVER, aniversario);
 
-            cDAO.createContact(c);
+        if (c == null) {
+            getContentResolver().insert(contactsUri, values);
+
             Toast.makeText(this, "Incluído com sucesso", Toast.LENGTH_SHORT).show();
         } else {
-            c.setNome(name);
-            c.setFone(fone);
-            c.setFone2(fone2);
-            c.setEmail(email);
-            c.setAniversario(aniversario);
-
-            cDAO.updateContact(c);
+            getContentResolver().update(ContentUris.withAppendedId(contactsUri, c.getId()), values, null, null);
             Toast.makeText(this, "Alterado com sucesso", Toast.LENGTH_SHORT).show();
         }
 
